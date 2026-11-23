@@ -1,0 +1,39 @@
+# Assistant + Ollama on one internal host. Nothing here talks to the internet at run time
+# (only `ollama pull` does, once, to download the models).
+services:
+  assistant:
+    build: .
+    ports:
+      # Reachable from this host only. The app has no login yet: to serve the internal network, put it
+      # behind the company reverse proxy / SSO, or set BIND_ADDRESS=0.0.0.0 on a trusted network.
+      - "${BIND_ADDRESS:-127.0.0.1}:8000:8000"
+    environment:
+      PRIVATE_MODE: "true"
+      OLLAMA_BASE_URL: http://ollama:11434
+      # Models can be overridden from the shell or a .env file next to this one.
+      CHAT_MODEL: ${CHAT_MODEL:-gemma4:e4b}
+      VISION_MODEL: ${VISION_MODEL:-gemma4:12b}
+      EMBEDDING_MODEL: ${EMBEDDING_MODEL:-embeddinggemma}
+    volumes:
+      - assistant-data:/data
+    depends_on:
+      - ollama
+    restart: unless-stopped
+
+  ollama:
+    image: ollama/ollama
+    volumes:
+      - ollama-models:/root/.ollama
+    restart: unless-stopped
+    # Uncomment on a host with an NVIDIA GPU:
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: all
+    #           capabilities: [gpu]
+
+volumes:
+  assistant-data:
+  ollama-models:

@@ -1,0 +1,14 @@
+INFEED BELT CONVEYOR 10-CNV-001 - MAINTENANCE SHEET
+DEMO DOCUMENT - fictional content for demonstration only. Not for use on real equipment.
+
+Function: conveyor 10-CNV-001 carries raw material from the receiving bay in Hall 1 to hydraulic press 40-HPR-001. Belt speed is adjustable from 0.2 to 0.8 m/s on the frequency drive.
+
+Belt tracking: if the belt drifts to one side, adjust the tail pulley on the side the belt is moving towards by a quarter turn, then let the belt run three full revolutions before adjusting again.
+
+Belt tension: with the belt stopped, the belt should lift 20 to 30 mm at mid-span. Too much tension damages the bearings.
+
+Monthly: inspect belt edges and the splice for damage, check idler rollers turn freely, clean material build-up from the tail pulley, check the pull-cord emergency stops on both sides.
+
+Every 6 months: grease the head and tail pulley bearings, check gearbox oil level.
+
+Safety: the conveyor can start automatically. Before removing guards or clearing a blockage, stop the conveyor, lock out the isolator at the drive end, and test that it cannot start by pressing START. Never clear a blockage on a moving belt.

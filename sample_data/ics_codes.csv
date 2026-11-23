@@ -1,0 +1,9 @@
+code,name,description,area,parent,manufacturer
+10-CNV-001,Infeed belt conveyor,Carries raw material from the receiving bay to the press line at a controlled rate.,Hall 1 - Intake,,Demo Conveyors BV
+20-CWS-001,Cooling water system,Closed-loop system that removes heat from the hydraulic press and the air compressor.,Hall 2 - Utilities,,
+20-PMP-001,Cooling water pump A (duty),Circulates cooling water through the closed loop. Normally the running pump.,Hall 2 - Utilities,20-CWS-001,Demo Pumps GmbH
+20-PMP-002,Cooling water pump B (standby),Identical standby pump that takes over automatically when pump A trips or loop pressure falls.,Hall 2 - Utilities,20-CWS-001,Demo Pumps GmbH
+20-HEX-001,Plate heat exchanger,Transfers heat from the closed cooling loop to the site cooling tower circuit.,Hall 2 - Utilities,20-CWS-001,
+30-CMP-001,Rotary screw air compressor,Supplies 7 bar instrument and plant air to the whole factory.,Hall 2 - Utilities,,Demo Air Ltd
+40-HPR-001,Hydraulic press,250 tonne press that forms the product. Main production machine of line 1.,Hall 1 - Line 1,,Demo Press AG
+50-PAL-001,Robot palletiser,Stacks finished product on pallets at the end of line 1.,Hall 3 - Dispatch,,

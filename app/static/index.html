@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Factory Assistant</title>
+<link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3h11A2.5 2.5 0 0 1 20 5.5v8a2.5 2.5 0 0 1-2.5 2.5H11l-4.5 4v-4A2.5 2.5 0 0 1 4 13.500z"/></symbol>
+    <symbol id="i-parts" viewBox="0 0 24 24"><rect x="3.5" y="3.500" width="7" height="7" rx="1.800"/><rect x="13.500" y="3.500" width="7" height="7" rx="1.800"/><rect x="3.500" y="13.500" width="7" height="7" rx="1.800"/><rect x="13.500" y="13.500" width="7" height="7" rx="1.800"/></symbol>
+    <symbol id="i-library" viewBox="0 0 24 24"><path d="M6 3.500h8.500L19 8v11a1.500 1.500 0 0 1-1.500 1.500h-11A1.500 1.500 0 0 1 5 19V5a1.500 1.500 0 0 1 1-1.500zM14 3.500V8.500h5M8.500 13h7M8.500 16.500h5"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2.200"/><circle cx="8" cy="17" r="2.200"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></symbol>
+    <symbol id="i-photo" viewBox="0 0 24 24"><rect x="3.500" y="5" width="17" height="14" rx="2.500"/><circle cx="9" cy="10" r="1.600"/><path d="M4 17l4.500-4.500 3.500 3.500 3-3 5 5"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.500" width="14" height="9.500" rx="2.200"/><path d="M8 10.500V8a4 4 0 0 1 8 0v2.500"/></symbol>
+    <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 18.500a4 4 0 0 1-.600-7.950 5.500 5.500 0 0 1 10.700 1.200A3.500 3.500 0 0 1 17 18.500z"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.500"/><path d="M16 16l4 4"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5M5 20h14"/></symbol>
+  </defs>
+</svg>
+
+<div class="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <span class="brand-mark"></span>
+      <span class="brand-name" id="appName">Factory Assistant</span>
+    </div>
+    <button class="new-chat" id="newChat"><svg class="icon"><use href="#i-plus"/></svg>New chat</button>
+    <nav class="nav">
+      <button data-view="chat" class="active"><svg class="icon"><use href="#i-chat"/></svg>Assistant</button>
+      <button data-view="parts"><svg class="icon"><use href="#i-parts"/></svg>Parts</button>
+      <button data-view="library"><svg class="icon"><use href="#i-library"/></svg>Library</button>
+      <button data-view="settings"><svg class="icon"><use href="#i-settings"/></svg>Settings</button>
+    </nav>
+    <div class="section-label">Recent</div>
+    <div class="conv-list" id="convList"></div>
+    <div class="privacy" id="privacy" title=""></div>
+  </aside>
+  <div class="scrim" id="scrim"></div>
+
+  <main>
+    <!-- Assistant -->
+    <section class="view active" id="view-chat">
+      <header class="topbar">
+        <button class="icon-btn menu-btn" aria-label="Menu"><svg class="icon"><use href="#i-menu"/></svg></button>
+        <h1 id="chatTitle">Assistant</h1>
+      </header>
+      <div class="messages" id="messages"></div>
+      <div class="composer-wrap">
+        <div class="attachment" id="attachment" hidden>
+          <img id="attachmentImg" alt="">
+          <span id="attachmentName"></span>
+          <button class="icon-btn" id="attachmentClear" aria-label="Remove photo"><svg class="icon"><use href="#i-x"/></svg></button>
+        </div>
+        <form class="composer" id="composer">
+          <button type="button" class="icon-btn" id="attachBtn" aria-label="Attach a photo" title="Attach a photo">
+            <svg class="icon"><use href="#i-photo"/></svg>
+          </button>
+          <input type="file" id="imageInput" accept="image/png,image/jpeg,image/webp" hidden>
+          <textarea id="input" rows="1" placeholder="Ask about a part, or enter an ICS code"></textarea>
+          <button type="submit" class="send" id="sendBtn" aria-label="Send" disabled><svg class="icon"><use href="#i-send"/></svg></button>
+        </form>
+        <p class="fineprint">Answers come from your library. Check the cited source before doing maintenance.</p>
+      </div>
+    </section>
+
+    <!-- Parts -->
+    <section class="view" id="view-parts">
+      <header class="topbar">
+        <button class="icon-btn menu-btn" aria-label="Menu"><svg class="icon"><use href="#i-menu"/></svg></button>
+        <h1>Parts</h1>
+        <div class="spacer"></div>
+        <button class="btn" id="importIcsBtn">Import CSV</button>
+        <button class="btn primary" id="addPartBtn">Add part</button>
+        <input type="file" id="icsFile" accept=".csv,.txt" hidden>
+      </header>
+      <div class="page">
+        <label class="search"><svg class="icon"><use href="#i-search"/></svg>
+          <input id="partSearch" type="search" placeholder="Search by ICS code, name or area"></label>
+        <div class="grid" id="partGrid"></div>
+      </div>
+    </section>
+
+    <!-- Library -->
+    <section class="view" id="view-library">
+      <header class="topbar">
+        <button class="icon-btn menu-btn" aria-label="Menu"><svg class="icon"><use href="#i-menu"/></svg></button>
+        <h1>Library</h1>
+      </header>
+      <div class="page">
+        <div class="banner" id="staleBanner" hidden></div>
+        <div class="drop" id="drop">
+          <svg class="icon big"><use href="#i-upload"/></svg>
+          <p><strong>Drop manuals, drawings or photos here</strong></p>
+          <p class="muted">PDF, Word, text, Markdown, CSV, PNG, JPEG, WebP</p>
+          <button class="btn primary" id="browseBtn">Choose files</button>
+          <input type="file" id="fileInput" multiple accept=".pdf,.docx,.txt,.md,.csv,.png,.jpg,.jpeg,.webp" hidden>
+        </div>
+        <label class="field inline">
+          <span>Tag uploads with ICS codes <em class="muted">(optional, comma separated)</em></span>
+          <input id="uploadCodes" type="text" placeholder="e.g. 20-PMP-001">
+        </label>
+        <div class="list" id="docList"></div>
+      </div>
+    </section>
+
+    <!-- Settings -->
+    <section class="view" id="view-settings">
+      <header class="topbar">
+        <button class="icon-btn menu-btn" aria-label="Menu"><svg class="icon"><use href="#i-menu"/></svg></button>
+        <h1>Settings</h1>
+        <div class="spacer"></div>
+        <button class="btn primary" id="saveSettings">Save</button>
+      </header>
+      <div class="page narrow">
+        <div class="banner" id="privacyNote"></div>
+
+        <h2>Models</h2>
+        <div class="card" id="roleCard"></div>
+
+        <h2>Connections</h2>
+        <div class="card">
+          <label class="row"><span>Ollama address</span><input id="ollamaUrl" type="url" spellcheck="false"></label>
+          <label class="row"><span>Google API key</span><input id="googleKey" type="password" autocomplete="off" placeholder="Not set"></label>
+          <label class="row"><span>OpenAI-compatible address</span><input id="openaiUrl" type="url" spellcheck="false"></label>
+          <label class="row"><span>OpenAI-compatible key</span><input id="openaiKey" type="password" autocomplete="off" placeholder="Not set"></label>
+        </div>
+        <p class="hint">Keys are stored on the server and never sent back to the browser.</p>
+
+        <h2>Retrieval</h2>
+        <div class="card">
+          <label class="row"><span>ICS code pattern</span><input id="icsPattern" type="text" spellcheck="false"></label>
+          <label class="row"><span>Sources per answer</span><input id="topK" type="number" min="1" max="20"></label>
+          <div class="row"><span>Search index</span><button class="btn" id="reindexBtn">Re-index library</button></div>
+        </div>
+        <p class="hint">The pattern is a regular expression used to spot codes that are not in the Parts registry yet. Re-index after changing the embedding model or the pattern.</p>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- Detail sheet (part details, add part) -->
+<div class="sheet-backdrop" id="sheetBackdrop" hidden>
+  <div class="sheet" role="dialog" aria-modal="true">
+    <button class="icon-btn sheet-close" id="sheetClose" aria-label="Close"><svg class="icon"><use href="#i-x"/></svg></button>
+    <div id="sheetBody"></div>
+  </div>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
